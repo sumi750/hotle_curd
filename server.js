@@ -4,11 +4,11 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 require("dotenv").config();
-const PORT =  process.env.PORT || 5050;
+const PORT =  process.env.PORT;
 app.use(bodyParser.json());
 // Mongo COnnection
 // const mongoURL = "mongodb://127.0.0.1:27017/myResto";
-const mongoURL = process.env.DB_URL || "mongodb+srv://sumipussgrc:Sumii1234@cluster0.ake0fng.mongodb.net/"
+const mongoURL = process.env.DB_URL;
 main().
 then(()=>{
     console.log("Connected to DB");
