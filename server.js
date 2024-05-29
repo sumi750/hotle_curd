@@ -39,7 +39,7 @@ app.get("/", (req,res)=>{
 
 // Routing
 const personRoutes = require('./routes/personRoute.js');
-app.use('/person',localAuthMW, personRoutes);
+app.use('/person', personRoutes);
 
 const menuRoute = require('./routes/menuRoute.js');
 app.use('/menu', menuRoute);
