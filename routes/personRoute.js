@@ -1,18 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const Person = require("./../models/person.js");
+const  {jwtAuth, generateToken} = require("./../models/jwt.js");
 
 // POst route to add person
-router.post("/",  async (req,res)=>{
+router.post("/signup",  async (req,res)=>{
 
     try{
         const data = req.body;
         const newPerson = new Person(data);
         const savedPerson =  await newPerson.save();
         console.log(savedPerson);
-        res.json(savedPerson);
-        res.send("data saved");
-
+        
+        const token = generateToken(savedPerson.username);
+        console.log("Token is :", token);
+        res.json({response: savedPerson, token: token});
     }
     catch(err){
         console.log(err);
@@ -21,7 +23,7 @@ router.post("/",  async (req,res)=>{
 });
 
 //Get method to get the person
-router.get("/",  async (req,res)=>{
+router.get("/login",  async (req,res)=>{
     try{
         const data = await Person.find({});
         console.log("Data fetched");
