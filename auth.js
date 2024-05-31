@@ -2,7 +2,7 @@ const passport = require("passport");
 const passportLocal = require("passport-local").Strategy;
 const Person = require("./models/person.js");
 
-passport.use(new passportLocal( async(username, password, done)=>{
+passport.use(new passportLocal( async function(username, password, done){
     //Authentication logic here
     try{
         console.log("Recived credentials: ", username, password);
@@ -10,7 +10,8 @@ passport.use(new passportLocal( async(username, password, done)=>{
         if(!user){
             return done(null, false, { message: "Incorrect username"});
         }
-        const isPasswordMatch =  user.password === password ? true : false; 
+        // const isPasswordMatch =  user.password === password ? true : false;
+        const isPasswordMatch =  await user.comparePassword(password);
         if(isPasswordMatch){
             return done(null, user);
         }
@@ -22,4 +23,5 @@ passport.use(new passportLocal( async(username, password, done)=>{
         return done(err);
     }
 }))
-module.exports = passport; 
+
+module.exports = passport;

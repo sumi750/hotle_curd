@@ -34,17 +34,21 @@ const personSchema = new Schema({
     }
 })
 
-personSchema.pre('save', async(next)=>{
-    const person = this;
+// Encrypt Password before saving into database
+
+personSchema.pre('save', async function(next){
+    // const person = this;
+    // const p = person.password;
     // Hash the password only if it has been modified(or is new)
-    if(!person.isModified("password")) return next();
+    if(!this.isModified("password")) return next();
     
     try{
-        const salt = await bcrypt.genSalt(10);
+        const salted = 10;
+        const salt = await bcrypt.genSalt(salted);
 
         // Hash password
-        const hashedPassword = await bcrypt.hash(person.password, salt);
-        person.password = hashedPassword;
+        const hashedPassword = await bcrypt.hash( this.password, salt);
+        this.password = hashedPassword;
         next();
     }
     catch(err){
@@ -52,10 +56,11 @@ personSchema.pre('save', async(next)=>{
     }
 })
 
-personSchema.methods.comparePassword =  async (candidatePassword) =>{
+personSchema.methods.comparePassword = async function(candidatePassword){
     try{
+
         const isMatch = await bcrypt.compare(candidatePassword, this.password);
-        return isMatch;
+        return isMatch; 
     }
     catch(err){
         throw err;

@@ -30,7 +30,7 @@ const logResuest = (req,res,next) =>{
 app.use(logResuest);
 
 app.use(passport.initialize());
-const localAuthMW = passport.authenticate("local", {session: false});
+const localPass = passport.authenticate("local", {session: false});
 
 // Home Page 
 app.get("/", (req,res)=>{
@@ -39,9 +39,8 @@ app.get("/", (req,res)=>{
 
 // Routing
 const personRoutes = require('./routes/personRoute.js');
-app.use('/person', personRoutes);
-
 const menuRoute = require('./routes/menuRoute.js');
+app.use('/person',localPass, personRoutes);
 app.use('/menu', menuRoute);
 
 
