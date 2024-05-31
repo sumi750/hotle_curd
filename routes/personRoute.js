@@ -12,7 +12,12 @@ router.post("/signup",  async (req,res)=>{
         const savedPerson =  await newPerson.save();
         console.log(savedPerson);
         
-        const token = generateToken(savedPerson.username);
+        const payload = {
+            id: savedPerson.id,
+            username: savedPerson.username
+        }
+        // Genretaing a Token
+        const token = generateToken(payload);
         console.log("Token is :", token);
         res.json({response: savedPerson, token: token});
     }
@@ -22,8 +27,35 @@ router.post("/signup",  async (req,res)=>{
     }
 });
 
+// Login ROuter
+router.post("/login", async(req,res)=>{
+
+    try{
+        const {username, password} = req.body;
+
+        const user = await Person.findOne({username: username});
+
+        if(!user || !(await user.comparePassword(password) != undefined)){
+            return res.status(401).json({error: "Ivalid Username or Password"});
+        }
+
+        // Genearte Tokens
+        const payload = {
+            id: user.id,
+            username: user.username
+        }
+
+        const token = generateToken(payload)
+        res.json({token});
+
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
 //Get method to get the person
-router.get("/login",  async (req,res)=>{
+router.get("/", jwtAuth, async (req,res)=>{
     try{
         const data = await Person.find({});
         console.log("Data fetched");
