@@ -119,7 +119,6 @@ router.delete('/:id', async(req,res)=>{
         const id = req.params.id;   // Extract the id from URL parameter
         // const updatePerson = req.body;
         const deletePerson = await Person.findByIdAndDelete(id);
-        console.log("Deleted Succes")
         res.send("Data Deleetd");
         console.log(deletePerson);
 

@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const jwtAuth = (req,res,next)=>{
 
     const authorization = req.headers.authorization
-    if(!authorization) return res.status(401).json({error:"Token not found"})
+    if(!authorization) return res.status(401).json({error:"Token not found or token is in valid"})
 
     // Extract the jwt token form the header
     const token = req.headers.authorization.split(' ')[1];

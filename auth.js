@@ -5,7 +5,7 @@ const Person = require("./models/person.js");
 passport.use(new passportLocal( async function(username, password, done){
     //Authentication logic here
     try{
-        console.log("Recived credentials: ", username, password);
+        // console.log("Recived credentials: ", username, password);
         const user = await Person.findOne({username: username});
         if(!user){
             return done(null, false, { message: "Incorrect username"});
@@ -16,7 +16,7 @@ passport.use(new passportLocal( async function(username, password, done){
             return done(null, user);
         }
         else{
-            return(null, false, { message: "Password is Incorrect"});
+            return(null, false, { message: "Password is Incorrect or invalid"});
         }
     }
     catch(err){
