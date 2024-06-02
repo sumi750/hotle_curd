@@ -3,7 +3,7 @@ const router = express.Router();
 const Person = require("./../models/person.js");
 const  {jwtAuth, generateToken} = require("./../models/jwt.js");
 
-// POst route to add person
+// Post Route to add person
 router.post("/signup",  async (req,res)=>{
 
     try{
@@ -12,10 +12,12 @@ router.post("/signup",  async (req,res)=>{
         const savedPerson =  await newPerson.save();
         console.log(savedPerson);
         
+        // Payload for data 
         const payload = {
             id: savedPerson.id,
             username: savedPerson.username
         }
+
         // Genretaing a Token
         const token = generateToken(payload);
         console.log("Token is :", token);
@@ -23,11 +25,11 @@ router.post("/signup",  async (req,res)=>{
     }
     catch(err){
         console.log(err);
-        // res.status(500).json(error, "Internal server error");
+        res.status(500).json(error, "Internal server error");
     }
 });
 
-// Login ROuter
+// Login Router
 router.post("/login", async(req,res)=>{
 
     try{
@@ -51,7 +53,28 @@ router.post("/login", async(req,res)=>{
     }
     catch(err){
         console.log(err);
+        res.status(500).json(error, "Internal server error");
     }
+})
+
+// Profile Route
+router.get("/profile", jwtAuth, async(req,res)=>{
+
+    try{
+        const userData = req.user;
+        console.log(userData)
+        const userId = userData.id;
+        console.log(userId);
+        const userr = await Person.findById(userId);
+        console.log(userr);
+        res.json(userr);
+    }
+    catch(err){
+        console.log("Error Accured");
+        res.status(500).send(err);
+
+    }
+
 })
 
 //Get method to get the person
@@ -63,12 +86,11 @@ router.get("/", jwtAuth, async (req,res)=>{
     }
     catch(err){
         console.log("Error Accured");
-        res.send(500).send(err);
+        res.status(500).send(err);
     }
 })
 
-
-//Get Method to get the work Type of Person
+// Method to get the work Type of Person
 router.get("/:worktype", async(req,res)=>{
     try{
         const worktype = req.params.worktype;
@@ -89,7 +111,7 @@ router.get("/:worktype", async(req,res)=>{
     }
 });
 
-// Update Route
+// Update Route 
 router.put('/:id', async(req,res)=>{
     try{
         const id = req.params.id;   // Extract the id from URL parameter
@@ -113,7 +135,7 @@ router.put('/:id', async(req,res)=>{
     }
 })
 
-// Delete a Route
+// Delete Route
 router.delete('/:id', async(req,res)=>{
     try{
         const id = req.params.id;   // Extract the id from URL parameter

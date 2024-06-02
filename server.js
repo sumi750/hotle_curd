@@ -6,6 +6,7 @@ require("dotenv").config();
 const passport = require("./auth.js");
 const PORT =  process.env.PORT;
 app.use(bodyParser.json());
+
 // Mongo COnnection
 const mongoURL = "mongodb://127.0.0.1:27017/myResto";
 // const mongoURL = process.env.DB_URL;
@@ -29,6 +30,7 @@ const logResuest = (req,res,next) =>{
 
 app.use(logResuest);
 
+// Intialize Local Passport
 app.use(passport.initialize());
 const localPass = passport.authenticate("local", {session: false});
 
@@ -40,7 +42,7 @@ app.get("/", (req,res)=>{
 // Routing
 const personRoutes = require('./routes/personRoute.js');
 const menuRoute = require('./routes/menuRoute.js');
-app.use('/person',localPass, personRoutes);
+app.use('/person', personRoutes);
 app.use('/menu', menuRoute);
 
 

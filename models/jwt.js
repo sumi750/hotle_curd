@@ -28,7 +28,7 @@ const jwtAuth = (req,res,next)=>{
 // Function to generate the JWT token
 const generateToken = (userData)=>{
 
-    return jwt.sign(userData, process.env.JWT_SECRET);
+    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: 5000});
 }
 
 

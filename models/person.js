@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
+
 // Person's Schema 
 const personSchema = new Schema({
     name:{
@@ -37,8 +38,6 @@ const personSchema = new Schema({
 // Encrypt Password before saving into database
 
 personSchema.pre('save', async function(next){
-    // const person = this;
-    // const p = person.password;
     // Hash the password only if it has been modified(or is new)
     if(!this.isModified("password")) return next();
     
