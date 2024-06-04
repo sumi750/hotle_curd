@@ -111,7 +111,7 @@ router.get("/:worktype", async(req,res)=>{
     }
 });
 
-// Update Route 
+// Update Route For person 
 router.put('/:id', async(req,res)=>{
     try{
         const id = req.params.id;   // Extract the id from URL parameter
@@ -135,7 +135,7 @@ router.put('/:id', async(req,res)=>{
     }
 })
 
-// Delete Route
+// Delete Route of Person 
 router.delete('/:id', async(req,res)=>{
     try{
         const id = req.params.id;   // Extract the id from URL parameter

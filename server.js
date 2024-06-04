@@ -7,7 +7,7 @@ const passport = require("./auth.js");
 const PORT =  process.env.PORT;
 app.use(bodyParser.json());
 
-// Mongo COnnection
+// Mongo Db Connection
 const mongoURL = "mongodb://127.0.0.1:27017/myResto";
 // const mongoURL = process.env.DB_URL;
 main().

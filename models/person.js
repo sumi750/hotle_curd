@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require("bcrypt");
 
-// Person's Schema 
+// Person Schema 
 const personSchema = new Schema({
     name:{
         type: String,
@@ -67,4 +67,5 @@ personSchema.methods.comparePassword = async function(candidatePassword){
 }
 
 const Person = mongoose.model("Person", personSchema);
+// Exporting of Schema 
 module.exports = Person;

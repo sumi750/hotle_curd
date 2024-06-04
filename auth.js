@@ -4,7 +4,7 @@ const Person = require("./models/person.js");
 
 passport.use(new passportLocal( async function(username, password, done){
     
-    //Authentication logic here
+    //Authentication logic for Token and Local Passport
     try{
         // console.log("Recived credentials: ", username, password);
         const user = await Person.findOne({username: username});
