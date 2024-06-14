@@ -3,6 +3,7 @@ const router = express.Router();
 const Person = require("./../models/person.js");
 const  {jwtAuth, generateToken} = require("./../models/jwt.js");
 
+
 // Post Route to add person
 router.post("/signup",  async (req,res)=>{
 
@@ -28,6 +29,7 @@ router.post("/signup",  async (req,res)=>{
         res.status(500).json(error, "Internal server error");
     }
 });
+
 
 // Login Router
 router.post("/login", async(req,res)=>{
@@ -57,6 +59,7 @@ router.post("/login", async(req,res)=>{
     }
 })
 
+
 // Profile Route
 router.get("/profile", jwtAuth, async(req,res)=>{
 
@@ -76,6 +79,7 @@ router.get("/profile", jwtAuth, async(req,res)=>{
     }
 
 })
+
 
 //Get method to get the person
 router.get("/", jwtAuth, async (req,res)=>{

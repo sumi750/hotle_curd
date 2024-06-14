@@ -6,6 +6,7 @@ passport.use(new passportLocal( async function(username, password, done){
     
     //Authentication logic for Token and Local Passport
     try{
+        
         // console.log("Recived credentials: ", username, password);
         const user = await Person.findOne({username: username});
         if(!user){
@@ -20,6 +21,7 @@ passport.use(new passportLocal( async function(username, password, done){
             return(null, false, { message: "Password is Incorrect or invalid"});
         }
     }
+
     catch(err){
         return done(err);
     }

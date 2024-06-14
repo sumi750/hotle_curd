@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 // JWT Token Authentication
 const jwtAuth = (req,res,next)=>{
 
+    
     const authorization = req.headers.authorization
     if(!authorization) return res.status(401).json({error:"Token not found or token is in valid"})
 
@@ -25,6 +26,7 @@ const jwtAuth = (req,res,next)=>{
     }
 
 }
+
 
 // Function to generate the JWT token
 const generateToken = (userData)=>{

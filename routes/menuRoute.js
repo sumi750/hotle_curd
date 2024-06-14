@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Menu = require("./../models/menu.js");
 
-
 // POst method for Menu
 router.post("/",  async (req,res)=>{
 
@@ -33,5 +32,4 @@ router.get("/",  async (req,res)=>{
         res.send(500).send(err);
     }
 })
-
 module.exports = router
